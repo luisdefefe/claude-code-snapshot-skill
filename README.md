@@ -4,13 +4,13 @@ A Claude Code skill for preserving versions of project pages on a static site.
 
 If you build web projects with Claude Code and want to write about how they evolved — *"version 1 was this, version 2 changed that, version 3 is what's live now"* — `/snapshot` saves the current state of a project as a frozen, browsable copy at a stable URL like `yoursite.com/projects/ProjectName/snapshot/v1/`. Each snapshot also gets a `SUMMARY.md` written by Claude, capturing what decisions were made in that version while the context is still fresh.
 
-The point is to create anchor points as you make design decisions so that it is easy to reference multiple version side by side. This is especially useful if you are writing about how a project developed over time. By the time you sit down to write *how* a project evolved, the *why* behind each version has usually faded. This skill captures both — a working version you can link to, plus a note from Claude written when the thinking was still in the room.
+The point is to create anchor points as you make design decisions so that it is easy to reference multiple versions side by side. This is especially useful if you are writing about how a project developed over time. By the time you sit down to write *how* a project evolved, the *why* behind each version has usually faded. This skill captures both — a working version you can link to, plus a note from Claude written when the thinking was still in the room.
 
 ## What it does
 
 You're working on a project page in Claude Code. You type `/snapshot` (or just say "take a snapshot"). Claude:
 
-1. Figures out which page you're snapshotting (defaults to the current directory).
+1. Figures out which page you're snapshotting (inferred from the conversation — what page you've been working on or discussing — and asks if it's ambiguous).
 2. Picks the next version number (`v1`, `v2`, `v3`...).
 3. Copies the page's files to `<page>/snapshot/vN/`.
 4. Injects `noindex` and a `canonical` link into the copied HTML, so the snapshot doesn't compete with your live page in search.
@@ -31,7 +31,7 @@ In your project repo:
 
 ```bash
 mkdir -p .claude/skills
-git clone https://github.com/<you>/snapshot-skill .claude/skills/snapshot
+git clone https://github.com/luisdefefe/claude-code-snapshot-skill .claude/skills/snapshot
 ```
 
 Or just download this folder and drop it at `.claude/skills/snapshot/` inside your repo. No install step, no dependencies, no build.
@@ -66,7 +66,7 @@ Each snapshot's HTML gets two additions in `<head>`:
 
 ```html
 <meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="/projects/forest/">
+<link rel="canonical" href="/projects/ProjectName/">
 ```
 
 `noindex` keeps snapshots out of search engines. The canonical link points back to the live page, so if a snapshot does end up in front of Google somehow, it knows the live page is the real version of this content.
