@@ -11,7 +11,7 @@ Preserves the current state of a project page as a frozen, linkable version at `
 
 To make the skill's report include a clickable URL instead of just a path, fill in your site's base URL below (e.g., `https://example.com`). Leave blank to skip — the skill will fall back to auto-detection, then to a relative path.
 
-Site URL: mnx
+Site URL: 
 
 ## When to invoke
 
